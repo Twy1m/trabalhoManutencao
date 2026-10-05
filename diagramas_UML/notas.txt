@@ -1,0 +1,15 @@
+Adicionar campos na tabela usuário:
+Cpf(100)
+Telefone(100)
+
+PS: Não pode criar tabelas novas e deve ser feito apenas uma atualização
+
+
+Criptografar Dados com crypto.js:
+senha
+cpf
+
+
+Criar uma rota de login que verifique se o usuário já existe e se a senha é idêntica
+
+PS: Token deve expirar em 90 minutos 1,5H
