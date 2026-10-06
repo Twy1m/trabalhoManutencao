@@ -1,5 +1,4 @@
 const crypto = require("crypto-js")
-const { DATE } = require("sequelize")
 const CHAVESECRETA = "Senha"
 
 function authMiddleware(req, res, next) {
@@ -15,7 +14,7 @@ function authMiddleware(req, res, next) {
 
 		const payload = JSON.parse(dadosDescriptografados)
 
-		if (DATE.now() > payload.ExpiraEm) return res.status(401).json({ message: "sessão expirada! faça login novamente" })
+		if (DATE.now() > payload.expiraEm) return res.status(401).json({ message: "sessão expirada! faça login novamente" })
 
 		req.usuario = payload
 

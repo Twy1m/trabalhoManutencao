@@ -1,11 +1,10 @@
 const Usuario = require("../models/Usuario")
 const CryptoJS = require("crypto-js")
-const CHAVESECRETA = "SENHA"
+const CHAVESECRETA = "Senha"
 
 const cadastrar = async (req, res) => {
 	// mudando o valores de constante para variavel para poder alterar os valores de senha e cpf
 	let valores = req.body
-	console.log(valores)
 
 	// adicionando verificação para o telefone e o cpf
 	if (!valores.nome || !valores.email || !valores.senha || !valores.cpf || !valores.telefone) {

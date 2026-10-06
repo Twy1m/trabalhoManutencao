@@ -17,15 +17,14 @@ const login = async (req, res) => {
 
 		if (valores.senha !== senha) return res.status(401).json({ message: "senha incorreta!" })
 
-		const trintaMin = 90 * 60 * 1000
-		const tempoExpira = Date.now() + trintaMin
+		const noventaMin = 90 * 60 * 1000
+		const tempoExpira = Date.now() + noventaMin
 
 		const payload = {
 			idUsuario: usuario.codUsuario,
 			nome: usuario.nome,
 			expiraEm: tempoExpira
 		}
-
 		const token = crypto.AES.encrypt(JSON.stringify(payload), CHAVESECRETA).toString()
 
 		return res.status(200).json({

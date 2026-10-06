@@ -11,6 +11,16 @@ Content-Type: application/json
 {
     "nome": "Adalberto",
     "email": "adalberto@gmail.com",
+    "senha": "123",
+    "cpf": "12345678912",
+    "telefone": "47912345678"
+}
+### - Login de Usuario
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+    "email": "adalberto@gmail.com",
     "senha": "123"
 }
 
@@ -21,7 +31,9 @@ Content-Type: application/json
 {
     "nome": "Marcos",
     "email": "marcos@gmail.com",
-    "senha": "123"
+    "senha": "123",
+    "cpf": "12345678912",
+    "telefone": "47912345678"
 }
 
 ### - Teste para Cadastrar o Usuário
@@ -31,7 +43,9 @@ Content-Type: application/json
 {
     "nome": "Ronaldo",
     "email": "ronaldo@gmail.com",
-    "senha": "123"
+    "senha": "123",
+    "cpf": "12345678912",
+    "telefone": "47912345678"
 }
 
 

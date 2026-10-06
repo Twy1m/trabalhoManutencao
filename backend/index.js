@@ -3,12 +3,16 @@ const app = express()
 const cors = require('cors')
 
 const conn = require('./db/conn')
+const authMiddleware = require('./middleware/auth.middleware')
 const produtoController = require('./controller/produto.controller')
 const usuarioController = require('./controller/usuario.controller')
 const movimentoController = require('./controller/movimento.controller')
+const authController = require('./controller/auth.controller')
 const relatVwController = require('./controller/relatVW.controller')
+
 const hostname =  'localhost' // 127.0.0.1
 const PORT = 3000
+
 // ------------ Middleware ----------
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
@@ -17,12 +21,13 @@ app.use(cors())
 
 //--------------- Rotas Publicas --------------
 
+app.get('/login', authController.login)
 app.post('/usuario', usuarioController.cadastrar)
 
 
 //--------------- Rotas Privadas --------------
+app.use(authMiddleware)
 
-app.post('/usuario', usuarioController.cadastrar)
 app.get('/usuarios', usuarioController.listar)
 app.get('/usuario/:id', usuarioController.buscarPorCod)
 app.get('/usuario/buscar/:nome', usuarioController.buscarPorNome)
