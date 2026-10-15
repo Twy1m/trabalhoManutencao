@@ -2,6 +2,15 @@ const Usuario = require("../models/Usuario")
 const CryptoJS = require("crypto-js")
 const CHAVESECRETA = "Senha"
 
+// Nunca devolve a senha; o cpf volta descriptografado só quando pedido (consulta individual)
+const montarResposta = (usuario, comCpf = false) => {
+	const { senha, cpf, ...dados } = usuario.toJSON()
+	if (comCpf) {
+		dados.cpf = CryptoJS.AES.decrypt(cpf, CHAVESECRETA).toString(CryptoJS.enc.Utf8)
+	}
+	return dados
+}
+
 const cadastrar = async (req, res) => {
 	// mudando o valores de constante para variavel para poder alterar os valores de senha e cpf
 	let valores = req.body
@@ -31,7 +40,7 @@ const cadastrar = async (req, res) => {
 }
 const listar = async (req, res) => {
 	try {
-		const dados = await Usuario.findAll()
+		const dados = await Usuario.findAll({ attributes: { exclude: ["senha", "cpf"] } })
 		res.status(200).json(dados)
 	} catch (err) {
 		console.error("Não foi possível listar os Usuários", err)
@@ -46,7 +55,7 @@ const buscarPorCod = async (req, res) => {
 		if (!dados) {
 			res.status(404).json({ message: "Usuário não encontrado!" })
 		} else {
-			res.status(200).json(dados)
+			res.status(200).json(montarResposta(dados, true))
 		}
 	} catch (err) {
 		console.error("Não foi possível encontrar o Usuário", err)
@@ -60,7 +69,7 @@ const buscarPorNome = async (req, res) => {
 		if (!dados) {
 			res.status(404).json({ message: "Nome do Usuário não encontrado!" })
 		} else {
-			res.status(200).json(dados)
+			res.status(200).json(montarResposta(dados, true))
 		}
 	} catch (err) {
 		console.error("Não foi possível encontrar o nome do Usuário", err)
@@ -84,7 +93,17 @@ const excluir = async (req, res) => {
 }
 const atualizar = async (req, res) => {
 	const id = req.params.id
-	const valores = req.body
+
+	// ignora campos vazios para não apagar dados já cadastrados
+	const valores = {}
+	for (const campo of ["nome", "email", "senha", "cpf", "telefone"]) {
+		if (req.body[campo]) valores[campo] = req.body[campo]
+	}
+
+	// Criptografando a senha e o cpf (quando enviados) antes de atualizar no banco de dados
+	if (valores.senha) valores.senha = CryptoJS.AES.encrypt(valores.senha, CHAVESECRETA).toString()
+	if (valores.cpf) valores.cpf = CryptoJS.AES.encrypt(valores.cpf, CHAVESECRETA).toString()
+
 	try {
 		let dados = await Usuario.findByPk(id)
 		if (!dados) {
@@ -92,7 +111,7 @@ const atualizar = async (req, res) => {
 		} else {
 			await Usuario.update(valores, { where: { codUsuario: id } })
 			dados = await Usuario.findByPk(id)
-			res.status(200).json(dados)
+			res.status(200).json(montarResposta(dados, true))
 		}
 	} catch (err) {
 		console.error("Não foi possível atualizar o Usuário", err)

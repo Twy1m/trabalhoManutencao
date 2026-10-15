@@ -7,6 +7,8 @@ btn_atualizar.addEventListener('click', (e) => {
     const codUsuario = document.getElementById('codUsuario').value
     const nome = document.getElementById('nome').value
     const email = document.getElementById('email').value
+    const cpf = document.getElementById('cpf').value
+    const telefone = document.getElementById('telefone').value
     const senha = document.getElementById('senha').value
 
     if (!codUsuario) {
@@ -14,13 +16,15 @@ btn_atualizar.addEventListener('click', (e) => {
         return
     }
 
-    const usuarioAtualizado = {
-        nome: nome,
-        email: email,
-        senha: senha
-    }
+    // envia somente os campos preenchidos
+    const usuarioAtualizado = {}
+    if (nome) usuarioAtualizado.nome = nome
+    if (email) usuarioAtualizado.email = email
+    if (cpf) usuarioAtualizado.cpf = cpf
+    if (telefone) usuarioAtualizado.telefone = telefone
+    if (senha) usuarioAtualizado.senha = senha
 
-    fetch(`http://localhost:3000/usuario/${codUsuario}`, {
+    authFetch(`http://localhost:3000/usuario/${codUsuario}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -60,7 +64,8 @@ function criarTbody(dados) {
         corpo += `<td>${el.codUsuario}</td>`
         corpo += `<td>${el.nome}</td>`
         corpo += `<td>${el.email}</td>`
-        corpo += `<td>${el.senha}</td>`
+        corpo += `<td>${el.cpf}</td>`
+        corpo += `<td>${el.telefone}</td>`
         corpo += `</tr>`
     })
     corpo += `</tbody>`
@@ -75,7 +80,8 @@ function criarThead() {
                 <th>Código</th>
                 <th>Nome</th>
                 <th>Email</th>
-                <th>Senha</th>
+                <th>CPF</th>
+                <th>Telefone</th>
             </tr>
         </thead>
     `

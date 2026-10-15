@@ -18,7 +18,7 @@ btn_cadastrar.addEventListener('click', (e) => {
         data: data
     }
 
-    fetch('http://localhost:3000/movimento', {
+    authFetch('http://localhost:3000/movimento', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

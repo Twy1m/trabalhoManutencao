@@ -24,7 +24,7 @@ btn_atualizar.addEventListener('click', (e) => {
         precoUnit: precoUnit
     }
 
-    fetch(`http://localhost:3000/produto/${codProduto}`, {
+    authFetch(`http://localhost:3000/produto/${codProduto}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'

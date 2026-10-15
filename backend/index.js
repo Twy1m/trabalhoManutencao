@@ -21,7 +21,7 @@ app.use(cors())
 
 //--------------- Rotas Publicas --------------
 
-app.get('/login', authController.login)
+app.post('/login', authController.login)
 app.post('/usuario', usuarioController.cadastrar)
 
 

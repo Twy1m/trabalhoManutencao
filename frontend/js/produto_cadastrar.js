@@ -18,7 +18,7 @@ btn_cadastrar.addEventListener('click', (e) => {
         precoUnit: precoUnit
     }
 
-    fetch('http://localhost:3000/produto', {
+    authFetch('http://localhost:3000/produto', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

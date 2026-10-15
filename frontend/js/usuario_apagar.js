@@ -8,7 +8,7 @@ btn_apagar.addEventListener('click', (e) => {
     
     const codUsuario = document.getElementById('codUsuario').value
 
-    fetch(`http://localhost:3000/usuario/${codUsuario}`,{
+    authFetch(`http://localhost:3000/usuario/${codUsuario}`,{
         method: 'DELETE'
     })
     .then(res => res.json())

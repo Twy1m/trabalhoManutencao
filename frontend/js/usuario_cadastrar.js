@@ -6,11 +6,15 @@ btn_cadastrar.addEventListener('click', (e) => {
     
     const nome = document.getElementById('nome').value
     const email = document.getElementById('email').value
+    const cpf = document.getElementById('cpf').value
+    const telefone = document.getElementById('telefone').value
     const senha = document.getElementById('senha').value
 
     const usuario = { 
         nome: nome,
         email: email,
+        cpf: cpf,
+        telefone: telefone,
         senha: senha
     }
 

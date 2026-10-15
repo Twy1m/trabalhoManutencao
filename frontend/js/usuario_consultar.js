@@ -8,13 +8,14 @@ btn_consultar.addEventListener('click', (e) => {
     
     const codUsuario = document.getElementById('codUsuario').value
 
-    fetch(`http://localhost:3000/usuario/${codUsuario}`)
+    authFetch(`http://localhost:3000/usuario/${codUsuario}`)
     .then(res => res.json())
     .then(dados => {
 
         // Se não encontrar o usuário ou vier mensagem de erro
-        if (!dados) {
-            resposta.innerHTML = `<p>${'Usuário não encontrado!'}</p>`
+        if (!dados || dados.message) {
+            resposta_nome.innerHTML = ''
+            resposta.innerHTML = `<p>${dados?.message || 'Usuário não encontrado!'}</p>`
             return
         }
 
@@ -39,13 +40,14 @@ btn_consultar_nome.addEventListener('click', (e) => {
     
     const nome = document.getElementById('nome').value
 
-    fetch(`http://localhost:3000/usuario/buscar/${nome}`)
+    authFetch(`http://localhost:3000/usuario/buscar/${nome}`)
     .then(res => res.json())
     .then(dados => {
 
         // Se não encontrar o usuário ou vier mensagem de erro
-        if (!dados) {
-            resposta_nome.innerHTML = `<p>${'Usuário não encontrado!'}</p>`
+        if (!dados || dados.message) {
+            resposta.innerHTML = ''
+            resposta_nome.innerHTML = `<p>${dados?.message || 'Usuário não encontrado!'}</p>`
             return
         }
 
@@ -73,7 +75,8 @@ function criarTbody(dados) {
         corpo += `<td>${el.codUsuario}</td>`
         corpo += `<td>${el.nome}</td>`
         corpo += `<td>${el.email}</td>`
-        corpo += `<td>${el.senha}</td>`
+        corpo += `<td>${el.cpf}</td>`
+        corpo += `<td>${el.telefone}</td>`
         corpo += `</tr>`
     })
     corpo += `</tbody>`
@@ -88,7 +91,8 @@ function criarThead() {
                 <th>Código</th>
                 <th>Nome</th>
                 <th>Email</th>
-                <th>Senha</th>
+                <th>CPF</th>
+                <th>Telefone</th>
             </tr>
         </thead>
     `

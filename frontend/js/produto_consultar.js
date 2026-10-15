@@ -8,7 +8,7 @@ btn_consultar.addEventListener('click', (e) => {
     
     const codProduto = document.getElementById('codProduto').value
 
-    fetch(`http://localhost:3000/produto/${codProduto}`)
+    authFetch(`http://localhost:3000/produto/${codProduto}`)
     .then(res => res.json())
     .then(dados => {
 
@@ -38,7 +38,7 @@ btn_consultar_nome.addEventListener('click', (e) => {
     
     const nome = document.getElementById('nome').value
 
-    fetch(`http://localhost:3000/produto/buscar/${nome}`)
+    authFetch(`http://localhost:3000/produto/buscar/${nome}`)
     .then(res => res.json())
     .then(dados => {
 

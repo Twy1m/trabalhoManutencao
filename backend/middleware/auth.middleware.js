@@ -14,14 +14,14 @@ function authMiddleware(req, res, next) {
 
 		const payload = JSON.parse(dadosDescriptografados)
 
-		if (DATE.now() > payload.expiraEm) return res.status(401).json({ message: "sessão expirada! faça login novamente" })
+		if (Date.now() > payload.expiraEm) return res.status(401).json({ message: "sessão expirada! faça login novamente" })
 
 		req.usuario = payload
 
 		next()
 	} catch (err) {
 		console.error("falha na autenticação", err)
-		res.status(500).json({ message: "erroa ao autenticar" })
+		res.status(500).json({ message: "erro ao autenticar" })
 	}
 }
 
